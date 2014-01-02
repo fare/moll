@@ -1,0 +1,31 @@
+* Complete the bibliography
+
+* Write a variant of libgc suitable for the linear lisp
+
+* Write a variant of the core language interpreter,
+   * in the style of maru? of gambit?
+
+* Bootstrap a fuller Linear Lisp on top of the core language
+   * in the style of gerbil?
+
+* Use ptrace and/or /proc for editing memory in a foreign process
+   * by default manipulate an external slave, don't modify current image
+   * initial state for the external slave is a mindless worker waiting
+   * still have special ways to work in the same process? atomically?
+     By creating a slave that hooks back onto the detached parent?
+
+* Reuse the insns.dat from nasm and write an assembler / disassembler
+   * have a maru-style assembler, except defined based on the nasm database
+   * use some reversible computing framework if possible
+   * use a framework that makes partial evaluation easier
+     so we can assemble faster by eliminating unused cases.
+   * if that helps, start by implementing 64-bit mode only
+
+* Bootstrap with some maru-style emit.l based on the above assembler
+
+* Maintain a content-addressed database of slave processes vs source
+   * where "source" means "all the things that led to building that"
+   * where "source" gives us complete offline debug information
+   * where we also have intent-addressed mapping of source to object
+
+* Profit!
