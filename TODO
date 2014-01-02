@@ -13,6 +13,12 @@
    * initial state for the external slave is a mindless worker waiting
    * still have special ways to work in the same process? atomically?
      By creating a slave that hooks back onto the detached parent?
+  * Bibliography:
+    http://dev.exherbo.org/~alip/pinktrace/
+    http://www.linuxjournal.com/article/6100
+    http://www.linuxjournal.com/node/6210
+  * Use SYSV shared memory (or mmap to same file?) to share data with child.
+    beware read/write barriers and icache flush.
 
 * Reuse the insns.dat from nasm and write an assembler / disassembler
    * have a maru-style assembler, except defined based on the nasm database
@@ -20,6 +26,8 @@
    * use a framework that makes partial evaluation easier
      so we can assemble faster by eliminating unused cases.
    * if that helps, start by implementing 64-bit mode only
+   * General x86 information: http://www.sandpile.org/
+   * Nasm: git://repo.or.cz/nasm.git
 
 * Bootstrap with some maru-style emit.l based on the above assembler
 

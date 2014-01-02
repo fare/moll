@@ -3,21 +3,24 @@ A mindless slave, waiting to be taken over by another process
 like a Rykor waiting for a Kaldane.
 
 TODO: find minimal ways to
-  * Have executable scratch space for bootstrapping,
-    or mmap space from the outside ptracing process?
-  * have dynamic loader symbol resolution,
-    if possible from the outside process,
-    otherwise from the inside as helpers available in the slave with -ldl
-  * Determine useful linked addresses from outside.
+  * Have executable scratch space for bootstrapping.
+    Can/should we do it all via ptrace-driven calls to mmap, shmget, etc?
+    We could "simply" have a SYSCALL at a fixed location (better not rely on vsyscall).
+    Or have some helper function prepackage this initialization?
+  * Have dynamic loader symbol resolution.
+    I don't think it's maintainably possible from the outside process,
+    so we may have to use libdl helpers inside the initial slave.
+  * Determine useful base addresses from outside.
     Whatever nm does, we can do on the executable to extract static linker values?
-  * Something even simpler, with the PTRACE_TRACEME in the parent before the fork,
+    Otherwise we can cheat and write the address to a pipe to the master.
+  * We can use PTRACE_TRACEME in the parent before the fork,
     with the parent synchronizing using waitpid(slave_pid).
-  * See PinkTrace? http://dev.exherbo.org/~alip/pinktrace/ Also articles on lwn.net
-  * Have a SYSENTER a fixed location — or just use one in the vsyscall page?
-    Instead of hardwiring the offset into the vsyscall page,
-    we can jump into the vsyscall and find the exact instruction for sure using PTRACE_SYSEMU.
+    Or we can use that communiation pipe to do things in userland.
   * Because it all happens in a different process, we can debug that interactively
     — assuming that for bootstrap purposes we already have a working interactive meta-environment.
+  * Ideally, for each architecture, have a trivial executable, that just uses SYSCALL to exit(),
+    or possibly one that forever loops in a deep sleep().
+    But a control pipe can be easier and less system-dependent.
 */
 
 #include <stdlib.h>
