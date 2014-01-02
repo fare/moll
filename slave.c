@@ -19,8 +19,16 @@ TODO: find minimal ways to
   * Because it all happens in a different process, we can debug that interactively
     — assuming that for bootstrap purposes we already have a working interactive meta-environment.
   * Ideally, for each architecture, have a trivial executable, that just uses SYSCALL to exit(),
-    or possibly one that forever loops in a deep sleep().
-    But a control pipe can be easier and less system-dependent.
+    or possibly one that forever loops in a deep sleep(). This minimizes the attack surface,
+    and makes whole-program static code analysis possible.
+    However, it doesn't play well with reusing dynamically linked libraries, libc, etc.,
+    that defeat the whole-program static code analysis, anyway.
+    A control pipe can also be easier and less system-dependent, and can be made remote,
+    or go across security barriers; however, it has a mini interpreter loop at fixed address,
+    which can be a big security concern for code injection, and should be mmap()ed out before
+    calling unsafe libraries, or at least randomized.
+    Therefore, a minimal ptrace-only slave is best in a completely self-contained world,
+    but a control pipe slave is more versatile and incremental, so is the low-hanging fruit.
 */
 
 #include <stdlib.h>
