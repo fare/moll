@@ -1,5 +1,12 @@
+CC = gcc
+CFLAGS = -Os -W -Wall -Wextra -Werror
+LINK_FLAGS = -ldl
+
+slave: slave.c
+	$(CC) $(CFLAGS) -o $@ $< $(LINK_FLAGS)
+
 slave.S: slave.c
-	gcc -S -Os -W -Wall -Wextra -Werror -Wno-ignored-qualifiers -o $@ $<
+	$(CC) $(CFLAGS) -S -o $@ $<
 
 clean:
 	git clean -xfd
