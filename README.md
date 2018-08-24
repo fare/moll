@@ -52,7 +52,7 @@ Linear Lisp
 
 * Jesse A. Tov's thesis "Practical Programming with Substructural Types"
   for a practical approach to dealing with linearity in a static language
-	http://www.eecs.harvard.edu/~tov/pubs/dissertation/
+	http://users.eecs.northwestern.edu/~jesse/pubs/dissertation/tov-dissertation-screen.pdf
 
 * ATS
   for a complete static language with dependent types and linear types
